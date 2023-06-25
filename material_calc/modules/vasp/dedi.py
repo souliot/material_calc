@@ -7,10 +7,10 @@ from tempfile import mkdtemp
 from shutil import rmtree
 from pymatgen.io.vasp.outputs import Outcar
 
-from util.logger import logs
-from config.setting import settings
-from model.dedi import DijResult
-from modules.common.space import get_mat_pie, get_mat_cij
+from material_calc.util.logger import logs
+from material_calc.config.setting import settings
+from material_calc.model.dedi import DijResult
+from material_calc.modules.common.space import get_mat_pie, get_mat_cij
 
 
 # 获取 De Di 的压电矩阵以及Dij

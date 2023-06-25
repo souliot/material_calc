@@ -3,7 +3,7 @@ from pymatgen.io.vasp import Poscar
 from pymatgen.io.cif import CifWriter
 from pymatgen.core.structure import Structure
 
-from config.setting import settings
+from material_calc.config.setting import settings
 
 
 def get_structure_by_id(id: str):

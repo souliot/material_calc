@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, File
 import os
 import numpy as np
 
-from util.auth import auth_app_key
-from config.setting import settings
-from model.resp import ResponseSuccessV1, ResponseV1, Code, Message, Response
-from model.validate import ValidRequest, AllRequest
-from modules.mpapi.structure import get_structure_by_id
+from fastapi import APIRouter, Depends, File
+
+from material_calc.util.auth import auth_app_key
+from material_calc.config.setting import settings
+from material_calc.model.resp import ResponseSuccessV1, ResponseV1, Code, Message, Response
+from material_calc.model.validate import ValidRequest, AllRequest
+from material_calc.modules.mpapi.structure import get_structure_by_id
 
 ROUTER_PREFIX = 'user'
 

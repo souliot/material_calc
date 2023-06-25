@@ -1,13 +1,14 @@
+import os
+
 from fastapi import APIRouter, Depends, File, Form
 from fastapi.responses import FileResponse
 
-import os
 
-from util.logger import logs
-from util.auth import auth_app_key
-from config.setting import settings
-from model.resp import ResponseSuccessV1, ResponseV1, Code, Message, Response
-from modules.vasp.dedi import get_dedi_result, get_dij_result
+from material_calc.util.logger import logs
+from material_calc.util.auth import auth_app_key
+from material_calc.config.setting import settings
+from material_calc.model.resp import ResponseSuccessV1, ResponseV1, Code, Message, Response
+from material_calc.modules.vasp.dedi import get_dedi_result, get_dij_result
 
 
 ROUTER_PREFIX = 'dedi'

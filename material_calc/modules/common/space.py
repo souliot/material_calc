@@ -1,19 +1,19 @@
 from pymatgen.core.structure import Structure
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 import json
-import math
+import os
 import numpy as np
 from typing import Literal
 
-from util.logger import logs
-from modules.common.const import CLOSE_EQUAL
+from material_calc.util.logger import logs
+from material_calc.modules.common.const import CLOSE_EQUAL
 
 ELA_JSON = {}
 DI_JSON = {}
 PIEZO_JSON = {}
 # 初始化 ELA JSON
 try:
-  with open('./modules/common/vector/ela.json', 'r') as ela:
+  with open(os.path.join(os.path.dirname(__file__), "vector/ela.json"), 'r') as ela:
     content = ela.read()
     ELA_JSON = json.loads(content)
   ela.close()
@@ -23,7 +23,7 @@ except Exception as e:
 
 # 初始化 DI JSON
 try:
-  with open('./modules/common/vector/di.json', 'r') as di:
+  with open(os.path.join(os.path.dirname(__file__), "vector/di.json"), 'r') as di:
     content = di.read()
     DI_JSON = json.loads(content)
   di.close()
@@ -33,7 +33,7 @@ except Exception as e:
 
 # 初始化 PIEZO JSON
 try:
-  with open('./modules/common/vector/piezo.json', 'r') as piezo:
+  with open(os.path.join(os.path.dirname(__file__), "vector/piezo.json"), 'r') as piezo:
     content = piezo.read()
     PIEZO_JSON = json.loads(content)
   piezo.close()

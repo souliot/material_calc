@@ -1,11 +1,8 @@
 from fastapi import FastAPI
 
-from routers import validate
-from routers import user
-from routers import ela
-from routers import dedi
-from util.http_exceptions import HTTPException, http_exception_handler
-from util.logger import logs
+from material_calc.routers import validate, user, ela, dedi
+from material_calc.util.http_exceptions import HTTPException, http_exception_handler
+from material_calc.util.logger import logs
 
 app = FastAPI()  # 创建 api 对象
 app.include_router(validate.router)

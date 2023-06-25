@@ -4,9 +4,9 @@ import math
 import numpy as np
 from typing import Literal
 
-from util.logger import logs
-from modules.common.const import CLOSE_EQUAL
-from modules.common.space import get_mat_di, get_mat_cij, get_mat_pie
+from material_calc.util.logger import logs
+from material_calc.modules.common.const import CLOSE_EQUAL
+from material_calc.modules.common.space import get_mat_di, get_mat_cij, get_mat_pie
 
 
 # 验证 DI

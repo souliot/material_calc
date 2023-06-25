@@ -5,10 +5,10 @@ import subprocess
 from zipfile import ZipFile
 import numpy as np
 
-from util.logger import logs
-from config.setting import settings
-from model.ela import ElaResult
-from util.str import strip_by_line
+from material_calc.util.logger import logs
+from material_calc.config.setting import settings
+from material_calc.model.ela import ElaResult
+from material_calc.util.str import strip_by_line
 
 HKL_TYPES = [
     "0 0 1",
