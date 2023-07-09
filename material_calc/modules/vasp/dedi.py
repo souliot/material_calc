@@ -15,6 +15,7 @@ from material_calc.modules.common.space import get_mat_pie, get_mat_cij
 
 # 获取 De Di 的压电矩阵以及Dij
 def get_dedi_result(outcar_de: str, outcar_di: str):
+  pwd = os.getcwd()
   res = DijResult()
   work_dir = mkdtemp(prefix="dedi-")
   logs.info("[{}]: get_dedi_result start".format(work_dir))
@@ -65,6 +66,7 @@ def get_dedi_result(outcar_de: str, outcar_di: str):
   piezo = de_piezo+di_piezo
   res.piezo_all = np.array2string(piezo).replace("[", "").replace("]", "")
 
+  os.chdir(pwd)
   rmtree(work_dir)
 
   logs.info("[{}]: get_dedi_result end".format(work_dir))

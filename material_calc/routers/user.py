@@ -5,8 +5,7 @@ from fastapi import APIRouter, Depends, File
 
 from material_calc.util.auth import auth_app_key
 from material_calc.config.setting import settings
-from material_calc.model.resp import ResponseSuccessV1, ResponseV1, Code, Message, Response
-from material_calc.model.validate import ValidRequest, AllRequest
+from material_calc.model.resp import ResponseSuccessV1, Response
 from material_calc.modules.mpapi.structure import get_structure_by_id
 
 ROUTER_PREFIX = 'user'
@@ -18,12 +17,14 @@ router = APIRouter(
 )
 
 
-@router.post("", tags=["mpapi"], response_model_exclude_none=True)
-async def all(req: ValidRequest) -> Response:
-  get_structure_by_id(req.poscar)
-  return ResponseSuccessV1()
-
-
-@router.post("/files", tags=["files"], response_model_exclude_none=True)
-async def files(poscar: bytes = File(), outcar: bytes = File()) -> Response:
-  return ResponseSuccessV1()
+@router.get("", tags=["info"], response_model_exclude_none=True)
+async def info() -> Response:
+  return ResponseSuccessV1(data={
+      "name": 'Admin',
+      "avatar": 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+      "userid": '00000001',
+      "email": 'admin@admin.com',
+      "signature": '系统用管理员',
+      "title": 'Admin',
+      "group": '系统用管理员',
+  })

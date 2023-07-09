@@ -19,6 +19,7 @@ HKL_TYPES = [
 
 # 获取 vaspkit 计算结果
 def vaspkit_ela_out(poscar: str, outcar: str):
+  pwd = os.getcwd()
   work_dir = mkdtemp(prefix="vaspkit-")
   logs.info("[{}]: vaspkit_ela_out start".format(work_dir))
   os.chdir(work_dir)
@@ -50,7 +51,7 @@ def vaspkit_ela_out(poscar: str, outcar: str):
     out.close()
 
   logs.info("[{}]: vaspkit_ela_out end".format(work_dir))
-
+  os.chdir(pwd)
   rmtree(work_dir)
   return res
 

@@ -6,9 +6,9 @@ class Settings(BaseSettings):
   # API Version
   API_V1_STR: str = "/api/v1/"
   # APP_KEY
-  APP_KEY: str = "llz"
+  APP_KEY: str = "Souliot"
   # APP_SECRET
-  APP_SECRET: str = "llz_123"
+  APP_SECRET: str = "Souliot"
   # MP Api Key
   MP_API_KEY: str = "OAkoJGcypWP2UwfCj886bsQIO44H33yk"
 
