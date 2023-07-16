@@ -280,7 +280,7 @@ def validate_piezo(a: SpacegroupAnalyzer, piezo: np.ndarray):
   return True, '{}: 验证通过'.format(key)
 
 
-def validate_di_str(poscar: str, di_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"], primitive: bool = True):
+def validate_di_str(poscar: str, di_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
   di = np.fromstring(di_str, dtype=float, sep=" ").reshape(6, 6)
 
@@ -289,7 +289,7 @@ def validate_di_str(poscar: str, di_str: str, fmt: Literal["cif", "poscar", "css
   return validate_di(a, di)
 
 
-def validate_cij_str(poscar: str, cij_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"], primitive: bool = True):
+def validate_cij_str(poscar: str, cij_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
   cij = np.fromstring(cij_str, dtype=float, sep=" ").reshape(6, 6)
 
@@ -298,7 +298,7 @@ def validate_cij_str(poscar: str, cij_str: str, fmt: Literal["cif", "poscar", "c
   return validate_cij(a, cij)
 
 
-def validate_piezo_str(poscar: str, piezo_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"], primitive: bool = True):
+def validate_piezo_str(poscar: str, piezo_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
   piezo = np.fromstring(piezo_str, dtype=float, sep=" ").reshape(3, 6)
 

@@ -8,6 +8,8 @@ import {
 import { useIntl } from '@umijs/max';
 import React from 'react';
 
+import { cij } from '@/services/valid';
+
 const ElaValid: React.FC = () => {
   /**
    * @en-US International configuration
@@ -15,8 +17,15 @@ const ElaValid: React.FC = () => {
    * */
   const intl = useIntl();
 
-  const OnValid = (values: any) => {
+  const OnValid = async (values: any) => {
     console.log(values);
+    const data = new FormData();
+    data.append('mat', values.mat);
+    data.append('poscar', values.poscar[0].originFileObj);
+
+    const res = await cij(data);
+
+    console.log(res);
   };
 
   return (
@@ -32,6 +41,12 @@ const ElaValid: React.FC = () => {
           label="POSCAR"
           name="poscar"
           title="请选择POSCAR文件"
+          max={1}
+          fieldProps={{
+            beforeUpload: () => {
+              return false;
+            },
+          }}
           rules={[{ required: true, message: '请选择POSCAR文件!' }]}
         />
         <ProFormTextArea

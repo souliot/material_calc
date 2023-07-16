@@ -1,6 +1,6 @@
 services:
   material_calc:
     container_name: 'material_calc'
-    image: 'material_calc:1.1'
+    image: 'material_calc:1.2'
     ports:
-      - '8000:80'
+      - '7001:80'
