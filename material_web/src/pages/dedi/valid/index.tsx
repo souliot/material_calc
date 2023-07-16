@@ -17,17 +17,17 @@ const ElaValid: React.FC = () => {
 
   const tabList = [
     {
-      tab: '全部',
-      key: 'all',
-      children: <AllValid />,
-    },
-    {
       tab: intl.formatMessage({
         id: 'pages.dedi.valid.matrix',
         defaultMessage: 'Material Calc',
       }),
       key: 'cij',
       children: <ItemValid />,
+    },
+    {
+      tab: '全部',
+      key: 'all',
+      children: <AllValid />,
     },
   ];
 
