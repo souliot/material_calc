@@ -138,6 +138,7 @@ def calc_elatools_item(work_dir: str, hkl_type: str):
 
 # 利用 ElaTools.x 计算，多个切面
 def calc_elatools_all(cij: str, props: str):
+  pwd = os.getcwd()
   work_dir = mkdtemp(prefix="elatools-")
   os.chdir(work_dir)
   # 写入 Cij.dat 文件
@@ -163,4 +164,5 @@ def calc_elatools_all(cij: str, props: str):
         zfile.write(os.path.join(foldername, i))
     zfile.close()
 
+  os.chdir(pwd)
   return work_dir, os.path.join(work_dir, zipfile_name)

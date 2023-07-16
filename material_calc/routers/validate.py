@@ -22,15 +22,15 @@ router = APIRouter(
 async def all(poscar: bytes = File(),  cij: str = Form(), di: str = Form(), piezo: str = Form()) -> Response:
   valid_di, res = validate_di_str(poscar.decode(), di)
   if (not valid_di):
-    return ResponseV1(Code.VaspValidateDi, Message.VaspValidateDi, res)
+    return ResponseV1(Code.VaspValidateDi, Message.VaspValidateDi, "Di矩阵-"+res)
 
   valid_cij, res = validate_cij_str(poscar.decode(), cij)
   if (not valid_cij):
-    return ResponseV1(Code.VaspValidateCij, Message.VaspValidateCij, res)
+    return ResponseV1(Code.VaspValidateCij, Message.VaspValidateCij, "Cij矩阵-"+res)
 
   valid_piezo, res = validate_piezo_str(poscar.decode(), piezo)
   if (not valid_piezo):
-    return ResponseV1(Code.VaspValidatePiezo, Message.VaspValidatePiezo, res)
+    return ResponseV1(Code.VaspValidatePiezo, Message.VaspValidatePiezo, "Piezo矩阵-"+res)
 
   return ResponseSuccessV1()
 

@@ -282,7 +282,7 @@ def validate_piezo(a: SpacegroupAnalyzer, piezo: np.ndarray):
 
 def validate_di_str(poscar: str, di_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
-  di = np.fromstring(di_str, dtype=float, sep=" ").reshape(6, 6)
+  di = np.fromstring(di_str, dtype=float, sep=" ").reshape(3, 3)
 
   a = SpacegroupAnalyzer(st, symprec=1e-2, angle_tolerance=5.0)
 

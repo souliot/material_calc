@@ -7,4 +7,7 @@ export default {
   'menu.ela': '弹性模量',
   'menu.ela.valid': '有效性验证',
   'menu.ela.calc': '弹性模量计算',
+  'menu.dedi': '压电性',
+  'menu.dedi.valid': '有效性验证',
+  'menu.dedi.calc': '压电计算',
 };

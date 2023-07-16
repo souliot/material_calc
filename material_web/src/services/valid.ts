@@ -6,10 +6,10 @@ import { BasicApiResponse } from '@/types/basic';
 
 const BASIC_PATH = '/api/v1/vasp/validate';
 
-export async function all(params: any) {
+export async function all(data: any) {
   const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}`, {
     method: 'POST',
-    params,
+    data,
   });
   return res as BasicApiResponse<any>;
 }
@@ -17,24 +17,23 @@ export async function all(params: any) {
 export async function cij(data: any) {
   const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/cij`, {
     method: 'POST',
-    header: { 'content-type': 'multipart/form-data' },
     data,
   });
   return res as BasicApiResponse<any>;
 }
 
-export async function di(params: any) {
+export async function di(data: any) {
   const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/di`, {
     method: 'POST',
-    params,
+    data,
   });
   return res as BasicApiResponse<any>;
 }
 
-export async function piezo(params: any) {
+export async function piezo(data: any) {
   const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/piezo`, {
     method: 'POST',
-    params,
+    data,
   });
   return res as BasicApiResponse<any>;
 }

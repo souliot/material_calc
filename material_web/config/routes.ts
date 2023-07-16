@@ -24,7 +24,7 @@ export default [
   {
     path: '/ela',
     name: 'ela',
-    icon: 'BulbOutlined',
+    icon: 'Gold',
     routes: [
       {
         path: '/ela',
@@ -33,12 +33,33 @@ export default [
       {
         name: 'valid',
         path: '/ela/valid',
-        component: './ela',
+        component: './ela/valid',
       },
       {
         name: 'calc',
         path: '/ela/calc',
-        component: './ela',
+        component: './ela/calc',
+      },
+    ],
+  },
+  {
+    path: '/dedi',
+    name: 'dedi',
+    icon: 'Thunderbolt',
+    routes: [
+      {
+        path: '/dedi',
+        redirect: '/dedi/valid',
+      },
+      {
+        name: 'valid',
+        path: '/dedi/valid',
+        component: './dedi/valid',
+      },
+      {
+        name: 'calc',
+        path: '/dedi/calc',
+        component: './dedi/calc',
       },
     ],
   },
