@@ -16,6 +16,7 @@ class Settings(BaseSettings):
   VASPKIT_ELA_LOG_FILE = "out.dat"
 
   # Vasp De Di
+  VASP_OUTCAR = "OUTCAR"
   VASP_OUTCAR_DE = "OUTCAR_DE"
   VASP_OUTCAR_DI = "OUTCAR_DI"
 

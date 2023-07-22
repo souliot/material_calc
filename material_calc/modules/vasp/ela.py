@@ -62,14 +62,17 @@ def get_ela_result(datas: str):
   seps = datas.split("\n \n")
   for idx in range(0, len(seps)):
     sep = seps[idx]
+    # cij
     if sep.startswith(" Stiffness Tensor C_ij (in GPa):"):
       sep = sep.replace(" Stiffness Tensor C_ij (in GPa):\n", "")
       cij = np.fromstring(sep, dtype=float, sep=" ").reshape(6, 6)
       ela_result.cij = np.array2string(cij).replace("[", "").replace("]", "")
+    # sij
     if sep.startswith(" Compliance Tensor S_ij (in GPa^{-1}):"):
       sep = sep.replace(" Compliance Tensor S_ij (in GPa^{-1}):\n", "")
       sij = np.fromstring(sep, dtype=float, sep=" ").reshape(6, 6)
       ela_result.sij = np.array2string(sij).replace("[", "").replace("]", "")
+    # Elasticity Modulus
     if sep.startswith(" Average mechanical properties of bulk polycrystal:"):
       res = get_bulk(sep)
       prop = "B,G,E,PWave,PoissonRatio,PughRatio\n{},{},{},{},{},{}\n".format(
@@ -80,9 +83,24 @@ def get_ela_result(datas: str):
           res["PoissonRatio"],
           res["PughRatio"],
       )
-      ela_result.mech_props = prop
+      ela_result.modulus = prop
+    # stable
+    if sep.startswith(" Elastic stability criteria as seen in PRB 90, 224104 (2014)."):
+      res = get_stable(sep)
+      ela_result.stable = res
 
   return ela_result
+
+
+# 获取 vaspkit 输出日志的 Mechanically Stable 部分结果
+def get_stable(data: str):
+  res = ""
+  bulks = data.split("\n")
+  for bulk in bulks:
+    if bulk.find(" +---------------------------------------------------------------+") != -1:
+      break
+    res += bulk.removeprefix(" ")+"\n"
+  return res
 
 
 # 获取 vaspkit 计算 Cij 输出日志的 Mechanical properties 部分结果
@@ -137,22 +155,50 @@ def calc_elatools_item(work_dir: str, hkl_type: str):
 
 
 # 利用 ElaTools.x 计算，多个切面
-def calc_elatools_all(cij: str, props: str):
+def calc_elatools_all(dir: str, cij: str, props: str):
   pwd = os.getcwd()
-  work_dir = mkdtemp(prefix="elatools-")
-  os.chdir(work_dir)
-  # 写入 Cij.dat 文件
-  with open('Cij.dat', 'w') as f:
-    f.write(cij)
-    f.close()
+  work_dir = dir
+  if work_dir == "" or not os.path.exists(work_dir) or len(os.listdir(work_dir)) == 0:
+    work_dir = mkdtemp(prefix="elatools-")
+    os.chdir(work_dir)
+    # 写入 Cij.dat 文件
+    with open('Cij.dat', 'w') as f:
+      f.write(cij)
+      f.close()
 
-  # 写入 props.dat 文件
-  with open('props.csv', 'w') as f:
-    f.write(props)
-    f.close()
+    # 写入 props.dat 文件
+    with open('props.csv', 'w') as f:
+      f.write(props)
+      f.close()
 
-  for hkl_type in HKL_TYPES:
-    calc_elatools_item(work_dir=work_dir, hkl_type=hkl_type)
+    for hkl_type in HKL_TYPES:
+      calc_elatools_item(work_dir=work_dir, hkl_type=hkl_type)
+
+  os.chdir(pwd)
+  return work_dir
+
+
+# 利用 ElaTools.x 计算，多个切面
+def calc_elatools_all_with_zipfile(dir: str, cij: str, props: str):
+  pwd = os.getcwd()
+  work_dir = dir
+  if work_dir == "" or not os.path.exists(work_dir) or len(os.listdir(work_dir)) == 0:
+    work_dir = mkdtemp(prefix="elatools-")
+    os.chdir(work_dir)
+    # 写入 Cij.dat 文件
+    with open('Cij.dat', 'w') as f:
+      f.write(cij)
+      f.close()
+
+    # 写入 props.dat 文件
+    with open('props.csv', 'w') as f:
+      f.write(props)
+      f.close()
+
+    for hkl_type in HKL_TYPES:
+      calc_elatools_item(work_dir=work_dir, hkl_type=hkl_type)
+  else:
+    os.chdir(work_dir)
 
   zipfile_name = "ela_calc.zip"
   with ZipFile(zipfile_name, 'w') as zfile:

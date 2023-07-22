@@ -12,6 +12,7 @@ RUN apt-get update && \
 ADD ./libs/vaspkit.1.4.1.linux.x64.tar.gz /app/libs
 ADD ./libs/ElATools-1.7.3.tar.gz /app/libs
 
+
 COPY ./libs/Makefile_ElaTools /app/libs/ElATools-1.7.3/soc/Makefile
 
 ENV PATH=/app/libs/vaspkit.1.4.1/bin:/app/libs/ElATools-1.7.3/bin:$PATH
@@ -23,6 +24,9 @@ RUN cd /app/libs/ElATools-1.7.3/soc && \
   echo -e "/app/libs/ElATools-1.7.3/db/\nn" | ./run_path.sh && \
   make && make clean && \
   pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+ADD ./libs/stylelib /app/libs/stylelib
+ADD ./libs/fonts /usr/local/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf
 
 COPY ./material_calc /app/material_calc
 

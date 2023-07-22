@@ -36,9 +36,40 @@ export default [
         component: './ela/valid',
       },
       {
+        name: 'stable',
+        path: '/ela/stable',
+        component: './ela/stable',
+      },
+      {
         name: 'calc',
         path: '/ela/calc',
         component: './ela/calc',
+      },
+      {
+        name: 'vision',
+        path: '/ela/vision',
+        component: './ela/vision',
+      },
+    ],
+  },
+  {
+    path: '/diele',
+    name: 'diele',
+    icon: 'Thunderbolt',
+    routes: [
+      {
+        path: '/diele',
+        redirect: '/diele/valid',
+      },
+      {
+        name: 'valid',
+        path: '/diele/valid',
+        component: './diele/valid',
+      },
+      {
+        name: 'calc',
+        path: '/diele/calc',
+        component: './diele/calc',
       },
     ],
   },
@@ -60,6 +91,27 @@ export default [
         name: 'calc',
         path: '/dedi/calc',
         component: './dedi/calc',
+      },
+    ],
+  },
+  {
+    path: '/dij',
+    name: 'dij',
+    icon: 'Thunderbolt',
+    routes: [
+      {
+        path: '/dij',
+        redirect: '/dij/valid',
+      },
+      {
+        name: 'valid',
+        path: '/dij/valid',
+        component: './dij/valid',
+      },
+      {
+        name: 'calc',
+        path: '/dij/calc',
+        component: './dij/calc',
       },
     ],
   },

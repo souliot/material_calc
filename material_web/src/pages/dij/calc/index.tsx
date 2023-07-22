@@ -9,7 +9,7 @@ import { useIntl, useModel } from '@umijs/max';
 import { Button } from 'antd';
 import React from 'react';
 
-import { dedi } from '@/services/dedi';
+import { dij } from '@/services/dedi';
 
 const Calc: React.FC = () => {
   /**
@@ -18,27 +18,27 @@ const Calc: React.FC = () => {
    * */
   const intl = useIntl();
 
-  const { calcRes, setCalcRes } = useModel('dedi_calc');
+  const { calcRes, setCalcRes } = useModel('dij_calc');
 
-  const resColumns = [
+  const resDijColumns = [
     {
-      title: 'eij_ele',
-      key: 'eij_ele',
-      dataIndex: 'eij_ele',
+      title: 'sij',
+      key: 'sij',
+      dataIndex: 'sij',
       valueType: 'code',
       copyable: true,
     },
     {
-      title: 'eij_ion',
-      key: 'eij_ion',
-      dataIndex: 'eij_ion',
-      valueType: 'code',
-      copyable: true,
-    },
-    {
-      title: 'eij_total',
-      key: 'eij_total',
+      title: 'eij',
+      key: 'eij',
       dataIndex: 'eij',
+      valueType: 'code',
+      copyable: true,
+    },
+    {
+      title: 'dij',
+      key: 'dij',
+      dataIndex: 'dij',
       valueType: 'code',
       copyable: true,
     },
@@ -46,7 +46,7 @@ const Calc: React.FC = () => {
 
   const getCalcBtnName = () => {
     return intl.formatMessage({
-      id: 'pages.dedi.calc',
+      id: 'pages.dedi.calc.dij',
       defaultMessage: 'Material Calc',
     });
   };
@@ -54,10 +54,12 @@ const Calc: React.FC = () => {
   const onCalcDedi = async (values: any) => {
     setCalcRes({});
     const data = new FormData();
+    data.append('poscar', values.poscar[0].originFileObj);
     data.append('outcar_de', values.outcar_de[0].originFileObj);
     data.append('outcar_di', values.outcar_di[0].originFileObj);
+    data.append('outcar_ela', values.outcar_ela[0].originFileObj);
 
-    const res = await dedi(data);
+    const res = await dij(data);
     if (res.code != 1) {
       return;
     }
@@ -88,6 +90,19 @@ const Calc: React.FC = () => {
         }}
       >
         <ProFormUploadButton
+          extra="目前支持POSCAR文件"
+          label="POSCAR"
+          name="poscar"
+          title="请选择POSCAR文件"
+          max={1}
+          fieldProps={{
+            beforeUpload: () => {
+              return false;
+            },
+          }}
+          rules={[{ required: true, message: '请选择POSCAR文件！' }]}
+        />
+        <ProFormUploadButton
           name="outcar_de"
           label="OUTCAR_ele"
           title="请选择OUTCAR_ele文件"
@@ -111,6 +126,18 @@ const Calc: React.FC = () => {
           }}
           rules={[{ required: true, message: '请选择OUTCAR_ion文件!' }]}
         />
+        <ProFormUploadButton
+          name="outcar_ela"
+          label="OUTCAR_elastic"
+          title="请选择OUTCAR_elastic文件"
+          max={1}
+          fieldProps={{
+            beforeUpload: () => {
+              return false;
+            },
+          }}
+          rules={[{ required: true, message: '请选择OUTCAR_elastic文件!' }]}
+        />
       </ProForm>
       <ProCard
         title="计算结果"
@@ -129,7 +156,7 @@ const Calc: React.FC = () => {
           </Button>
         }
       >
-        <ProDescriptions column={1} size={'middle'} dataSource={calcRes} columns={resColumns} />
+        <ProDescriptions column={1} size={'middle'} dataSource={calcRes} columns={resDijColumns} />
       </ProCard>
     </PageContainer>
   );

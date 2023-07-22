@@ -147,49 +147,49 @@ def validate_cij(a: SpacegroupAnalyzer, cij: np.ndarray):
   return True, '{}: 验证通过'.format(key)
 
 
-# 验证 piezo
-def validate_piezo(a: SpacegroupAnalyzer, piezo: np.ndarray):
+# 验证 eij
+def validate_eij(a: SpacegroupAnalyzer, eij: np.ndarray):
   # 获取矩阵
   key, pie_mask = get_mat_pie(a)
   # 1、0 值
   # 小于阈值的 置0
-  piezo_s = piezo.copy()
-  threshold = np.maximum(piezo, -piezo).max()*0.01
-  piezo_s[piezo_s < threshold] = 0
+  eij_s = eij.copy()
+  threshold = np.maximum(eij, -eij).max()*0.01
+  eij_s[eij_s < threshold] = 0
   # Mask
-  piezo_m = np.multiply(piezo, pie_mask)
-  if not np.allclose(piezo_s, piezo_m, rtol=1.e-5):
+  eij_m = np.multiply(eij, pie_mask)
+  if not np.allclose(eij_s, eij_m, rtol=1.e-5):
     if (key != 'Triclinic'):
       return False, '{}: 置0位置不符'.format(key)
   # 3、非0位置
   if (key == 'Tetragonal_4h'):
     # e14=e25, e15=-e24, e31=-e32
-    if not (math.isclose(piezo[0][3], piezo[1][4], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=e25不符'.format(key)
-    if not (math.isclose(piezo[0][4], piezo[1][3]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=-e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=-e32不符'.format(key)
 
   if (key == 'Tetragonal_4'):
     # e14=-e25, e15=e24, e31=e32
-    if not (math.isclose(piezo[0][3], piezo[1][4]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=-e25不符'.format(key)
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Tetragonal_4mm'):
     # e15=e24, e31=e32
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Tetragonal_4hm2'):
     # e14=e25
-    if not (math.isclose(piezo[0][3], piezo[1][4], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=e25不符'.format(key)
 
   if (key == 'Tetragonal_422'):
@@ -197,73 +197,73 @@ def validate_piezo(a: SpacegroupAnalyzer, piezo: np.ndarray):
 
   if (key == 'Trigonal_3'):
     # e11=-e12=-e26, e21=-e22=e16, e14=-e25, e15=e24, e31=e32
-    if not (math.isclose(piezo[0][0], piezo[0][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[0][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e12不符'.format(key)
-    if not (math.isclose(piezo[0][0], piezo[1][5]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[1][5]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e26不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[1][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[1][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=-e22不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[0][5], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[0][5], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=e16不符'.format(key)
-    if not (math.isclose(piezo[0][3], piezo[1][4]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=-e25不符'.format(key)
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Trigonal_3m'):
     # e21=-e22=e16, e15=e24, e31=e32
-    if not (math.isclose(piezo[1][0], piezo[1][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[1][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=-e22不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[0][5], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[0][5], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=e16不符'.format(key)
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Trigonal_32'):
     # e11=-e12=-e26, e14=-e25
-    if not (math.isclose(piezo[0][0], piezo[0][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[0][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e12不符'.format(key)
-    if not (math.isclose(piezo[0][0], piezo[1][5]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[1][5]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e26不符'.format(key)
-    if not (math.isclose(piezo[0][3], piezo[1][4]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=-e25不符'.format(key)
 
   if (key == 'Hexagonal_6'):
     # e14=-e25, e15=e24, e31=e32
-    if not (math.isclose(piezo[0][3], piezo[1][4]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=-e25不符'.format(key)
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Hexagonal_6h'):
     # e11=-e12=-e26, e21=-e22=e16
-    if not (math.isclose(piezo[0][0], piezo[0][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[0][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e12不符'.format(key)
-    if not (math.isclose(piezo[0][0], piezo[1][5]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][0], eij[1][5]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e11=-e26不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[1][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[1][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=-e22不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[0][5], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[0][5], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=e16不符'.format(key)
 
   if (key == 'Hexagonal_6mm'):
     # e15=e24, e31=e32
-    if not (math.isclose(piezo[0][4], piezo[1][3], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][4], eij[1][3], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e15=e24不符'.format(key)
-    if not (math.isclose(piezo[2][0], piezo[2][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[2][0], eij[2][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e31=e32不符'.format(key)
 
   if (key == 'Hexagonal_6hm2'):
     # e21=-e22=e16
-    if not (math.isclose(piezo[1][0], piezo[1][1]*-1, rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[1][1]*-1, rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=-e22不符'.format(key)
-    if not (math.isclose(piezo[1][0], piezo[0][5], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[1][0], eij[0][5], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e21=e16不符'.format(key)
 
   if (key == 'Hexagonal_622'):
@@ -272,9 +272,9 @@ def validate_piezo(a: SpacegroupAnalyzer, piezo: np.ndarray):
 
   if (key == 'Cubic'):
     # e14=e25=e36
-    if not (math.isclose(piezo[0][3], piezo[1][4], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[1][4], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=e25不符'
-    if not (math.isclose(piezo[0][3], piezo[2][5], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(eij[0][3], eij[2][5], rel_tol=CLOSE_EQUAL)):
       return False, '{}: e14=e36不符'
 
   return True, '{}: 验证通过'.format(key)
@@ -298,10 +298,10 @@ def validate_cij_str(poscar: str, cij_str: str, fmt: Literal["cif", "poscar", "c
   return validate_cij(a, cij)
 
 
-def validate_piezo_str(poscar: str, piezo_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
+def validate_eij_str(poscar: str, eij_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
-  piezo = np.fromstring(piezo_str, dtype=float, sep=" ").reshape(3, 6)
+  eij = np.fromstring(eij_str, dtype=float, sep=" ").reshape(3, 6)
 
   a = SpacegroupAnalyzer(st, symprec=1e-2, angle_tolerance=5.0)
 
-  return validate_piezo(a, piezo)
+  return validate_eij(a, eij)

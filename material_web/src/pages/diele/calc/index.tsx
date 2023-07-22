@@ -9,49 +9,55 @@ import { useIntl, useModel } from '@umijs/max';
 import { Button } from 'antd';
 import React from 'react';
 
-import { ela } from '@/services/ela';
+import { dedi } from '@/services/dedi';
 
-const ElaCalc: React.FC = () => {
+const Calc: React.FC = () => {
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
   const intl = useIntl();
 
-  const { calcRes, setCalcRes } = useModel('ela_calc');
-  const { dataForm } = useModel('ela');
+  const { calcRes, setCalcRes } = useModel('diele_calc');
 
   const resColumns = [
     {
-      title: 'Elasticity Modulus',
-      key: 'modulus',
-      dataIndex: 'modulus',
+      title: 'εij_ele',
+      key: 'εij_ele',
+      dataIndex: 'εij_ele',
       valueType: 'code',
       copyable: true,
     },
     {
-      title: 'Elastic Stiffness Constant（cij）',
-      key: 'cij',
-      dataIndex: 'cij',
+      title: 'εij_ion',
+      key: 'εij_ion',
+      dataIndex: 'εij_ion',
       valueType: 'code',
       copyable: true,
     },
     {
-      title: 'Elastic Compliance Constant（sij）',
-      key: 'sij',
-      dataIndex: 'sij',
+      title: 'εij_total',
+      key: 'εij_total',
+      dataIndex: 'εij',
       valueType: 'code',
       copyable: true,
     },
   ];
 
-  const onCalcEla = async (values: any) => {
+  const getCalcBtnName = () => {
+    return intl.formatMessage({
+      id: 'pages.diele.calc',
+      defaultMessage: 'Material Calc',
+    });
+  };
+
+  const onCalcDedi = async (values: any) => {
     setCalcRes({});
     const data = new FormData();
-    data.append('poscar', values.poscar[0].originFileObj);
-    data.append('outcar', values.outcar[0].originFileObj);
+    data.append('outcar_de', values.outcar_de[0].originFileObj);
+    data.append('outcar_di', values.outcar_di[0].originFileObj);
 
-    const res = await ela(data);
+    const res = await dedi(data);
     if (res.code != 1) {
       return;
     }
@@ -67,44 +73,39 @@ const ElaCalc: React.FC = () => {
       <ProForm
         submitter={{
           searchConfig: {
-            submitText: intl.formatMessage({
-              id: 'pages.ela.calc',
-              defaultMessage: 'Material Calc',
-            }),
+            submitText: getCalcBtnName(),
           },
           render: ({ form }, doms) => {
             return [...doms];
           },
         }}
-        form={dataForm}
         onFinish={async (values) => {
-          await onCalcEla(values);
+          await onCalcDedi(values);
         }}
       >
         <ProFormUploadButton
-          name="poscar"
-          label="POSCAR"
-          title="请选择POSCAR文件"
-          extra="目前支持POSCAR文件"
+          name="outcar_de"
+          label="OUTCAR_ele"
+          title="请选择OUTCAR_ele文件"
           max={1}
           fieldProps={{
             beforeUpload: () => {
               return false;
             },
           }}
-          rules={[{ required: true, message: '请选择POSCAR文件!' }]}
+          rules={[{ required: true, message: '请选择OUTCAR_ele文件!' }]}
         />
         <ProFormUploadButton
-          name="outcar"
-          label="OUTCAR"
-          title="请选择OUTCAR文件"
+          name="outcar_di"
+          label="OUTCAR_ion"
+          title="请选择OUTCAR_ion文件"
           max={1}
           fieldProps={{
             beforeUpload: () => {
               return false;
             },
           }}
-          rules={[{ required: true, message: '请选择OUTCAR文件!' }]}
+          rules={[{ required: true, message: '请选择OUTCAR_ion文件!' }]}
         />
       </ProForm>
       <ProCard
@@ -130,4 +131,4 @@ const ElaCalc: React.FC = () => {
   );
 };
 
-export default ElaCalc;
+export default Calc;

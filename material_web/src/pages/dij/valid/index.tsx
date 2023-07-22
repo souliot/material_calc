@@ -1,29 +1,29 @@
-import { ProCard, ProForm, ProFormTextArea, ProFormUploadButton } from '@ant-design/pro-components';
+import { PageContainer, ProCard, ProForm, ProFormUploadButton } from '@ant-design/pro-components';
 import { useIntl, useModel } from '@umijs/max';
 import { Result } from 'antd';
 import React from 'react';
 
-import { cij } from '@/services/valid';
+import { eij } from '@/services/valid';
 
-const ItemValid: React.FC = () => {
+const Valid: React.FC = () => {
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
   const intl = useIntl();
-
   const { validItemStatus, setValidItemStatus, validItemDetail, setValidItemDetail } =
     useModel('valid');
 
   const OnValid = async (values: any) => {
     const data = new FormData();
-    data.append('mat', values.mat);
+    data.append('outcar', values.outcar[0].originFileObj);
     data.append('poscar', values.poscar[0].originFileObj);
 
-    const res = await cij(data);
+    const res = await eij(data);
 
     if (res.code == 1) {
       setValidItemStatus('success');
+      setValidItemDetail('');
       return;
     }
     setValidItemStatus('error');
@@ -31,7 +31,11 @@ const ItemValid: React.FC = () => {
   };
 
   return (
-    <>
+    <PageContainer
+      header={{
+        breadcrumb: {},
+      }}
+    >
       <ProForm
         submitter={{
           render: (props, doms) => {
@@ -54,17 +58,19 @@ const ItemValid: React.FC = () => {
               return false;
             },
           }}
-          rules={[{ required: true, message: '请选择POSCAR文件!' }]}
+          rules={[{ required: true, message: '请选择POSCAR文件！' }]}
         />
-        <ProFormTextArea
-          name="mat"
-          label="Cij 矩阵"
-          placeholder="请输入Cij矩阵"
-          tooltip="6*6 矩阵，空格分割"
-          rules={[{ required: true, message: '请输入Cij矩阵' }]}
+        <ProFormUploadButton
+          name="outcar"
+          label="OUTCAR"
+          title="请选择OUTCAR文件"
+          max={1}
           fieldProps={{
-            autoSize: { minRows: 11, maxRows: 20 },
+            beforeUpload: () => {
+              return false;
+            },
           }}
+          rules={[{ required: true, message: '请选择OUTCAR文件!' }]}
         />
       </ProForm>
       <ProCard title="验证结果" style={{ marginTop: 20 }} bordered headerBordered>
@@ -74,8 +80,8 @@ const ItemValid: React.FC = () => {
           subTitle={validItemDetail}
         />
       </ProCard>
-    </>
+    </PageContainer>
   );
 };
 
-export default ItemValid;
+export default Valid;

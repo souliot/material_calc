@@ -11,35 +11,21 @@ import React from 'react';
 
 import { ela } from '@/services/ela';
 
-const ElaCalc: React.FC = () => {
+const ElaStable: React.FC = () => {
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
   const intl = useIntl();
 
-  const { calcRes, setCalcRes } = useModel('ela_calc');
+  const { calcRes, setCalcRes } = useModel('ela_stable');
   const { dataForm } = useModel('ela');
 
   const resColumns = [
     {
-      title: 'Elasticity Modulus',
-      key: 'modulus',
-      dataIndex: 'modulus',
-      valueType: 'code',
-      copyable: true,
-    },
-    {
-      title: 'Elastic Stiffness Constant（cij）',
-      key: 'cij',
-      dataIndex: 'cij',
-      valueType: 'code',
-      copyable: true,
-    },
-    {
-      title: 'Elastic Compliance Constant（sij）',
-      key: 'sij',
-      dataIndex: 'sij',
+      title: '稳定性结论',
+      key: 'stable',
+      dataIndex: 'stable',
       valueType: 'code',
       copyable: true,
     },
@@ -68,7 +54,7 @@ const ElaCalc: React.FC = () => {
         submitter={{
           searchConfig: {
             submitText: intl.formatMessage({
-              id: 'pages.ela.calc',
+              id: 'pages.ela.stable',
               defaultMessage: 'Material Calc',
             }),
           },
@@ -130,4 +116,4 @@ const ElaCalc: React.FC = () => {
   );
 };
 
-export default ElaCalc;
+export default ElaStable;

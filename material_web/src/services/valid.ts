@@ -22,16 +22,16 @@ export async function cij(data: any) {
   return res as BasicApiResponse<any>;
 }
 
-export async function di(data: any) {
-  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/di`, {
+export async function diele(data: any) {
+  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/diele`, {
     method: 'POST',
     data,
   });
   return res as BasicApiResponse<any>;
 }
 
-export async function piezo(data: any) {
-  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/piezo`, {
+export async function eij(data: any) {
+  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/eij`, {
     method: 'POST',
     data,
   });

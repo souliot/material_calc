@@ -1,4 +1,5 @@
 class ElaResult():
   cij: str
   sij: str
-  mech_props: str
+  stable: str
+  modulus: str

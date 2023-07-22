@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function ElaCalc() {
+export default function ElaStable() {
   const [calcRes, setCalcRes] = useState<any>();
 
   return {
