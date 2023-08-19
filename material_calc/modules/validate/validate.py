@@ -22,7 +22,7 @@ def validate_di(a: SpacegroupAnalyzer, di: np.ndarray):
   # 小于阈值的 置0
   di_s = di.copy()
   threshold = np.maximum(di, -di).max()*0.01
-  di_s[di_s <= threshold] = 0
+  di_s[abs(di_s) <= threshold] = 0
   # Mask
   di_m = np.multiply(di, di_mask)
   if not np.allclose(di_s, di_m, rtol=1.e-5):
@@ -57,7 +57,7 @@ def validate_cij(a: SpacegroupAnalyzer, cij: np.ndarray):
   # 小于阈值的 置0
   cij_s = cij.copy()
   threshold = np.maximum(cij, -cij).max()*0.01
-  cij_s[cij_s <= threshold] = 0
+  cij_s[abs(cij_s) <= threshold] = 0
   # Mask
   cij_m = np.multiply(cij, cij_mask)
   if not np.allclose(cij_s, cij_m, rtol=1.e-5):
@@ -155,7 +155,7 @@ def validate_eij(a: SpacegroupAnalyzer, eij: np.ndarray):
   # 小于阈值的 置0
   eij_s = eij.copy()
   threshold = np.maximum(eij, -eij).max()*0.01
-  eij_s[eij_s < threshold] = 0
+  eij_s[abs(eij_s) < threshold] = 0
   # Mask
   eij_m = np.multiply(eij, pie_mask)
   if not np.allclose(eij_s, eij_m, rtol=1.e-5):
