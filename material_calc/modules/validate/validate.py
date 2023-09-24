@@ -6,39 +6,39 @@ from typing import Literal
 
 from material_calc.util.logger import logs
 from material_calc.modules.common.const import CLOSE_EQUAL
-from material_calc.modules.common.space import get_mat_di, get_mat_cij, get_mat_pie
+from material_calc.modules.common.space import get_mat_εij, get_mat_cij, get_mat_pie
 
 
-# 验证 DI
-def validate_di(a: SpacegroupAnalyzer, di: np.ndarray):
+# 验证 εij
+def validate_εij(a: SpacegroupAnalyzer, εij: np.ndarray):
   # 获取矩阵
-  key, di_mask = get_mat_di(a)
+  key, εij_mask = get_mat_εij(a)
   # 1、对称性
   # 获取矩阵转置
-  di_t = di.T
-  if not np.allclose(di, di_t, rtol=1.e-5):
+  εij_t = εij.T
+  if not np.allclose(εij, εij_t, rtol=1.e-5):
     return False, '{}: 不对称'.format(key)
   # 2、0 值
   # 小于阈值的 置0
-  di_s = di.copy()
-  threshold = np.maximum(di, -di).max()*0.01
-  di_s[abs(di_s) <= threshold] = 0
+  εij_s = εij.copy()
+  threshold = np.maximum(εij, -εij).max()*0.01
+  εij_s[abs(εij_s) <= threshold] = 0
   # Mask
-  di_m = np.multiply(di, di_mask)
-  if not np.allclose(di_s, di_m, rtol=1.e-5):
+  εij_m = np.multiply(εij, εij_mask)
+  if not np.allclose(εij_s, εij_m, rtol=1.e-5):
     if (key != 'Triclinic'):
       return False, '{}: 置0位置不符'.format(key)
   # 3、非0位置
   if (key == 'Tetragonal' or key == 'Trigonal' or key == 'Hexagonal'):
     # D11=D22
-    if not (math.isclose(di[0][0], di[1][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(εij[0][0], εij[1][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: D11=D22不符'.format(key)
 
   if (key == 'Cubic'):
     # D11=D22=D33
-    if not (math.isclose(di[0][0], di[1][1], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(εij[0][0], εij[1][1], rel_tol=CLOSE_EQUAL)):
       return False, '{}: D11=D22不符'.format(key)
-    if not (math.isclose(di[0][0], di[2][2], rel_tol=CLOSE_EQUAL)):
+    if not (math.isclose(εij[0][0], εij[2][2], rel_tol=CLOSE_EQUAL)):
       return False, '{}: D11=D33不符'.format(key)
 
   return True, '{}: 验证通过'.format(key)
@@ -280,13 +280,13 @@ def validate_eij(a: SpacegroupAnalyzer, eij: np.ndarray):
   return True, '{}: 验证通过'.format(key)
 
 
-def validate_di_str(poscar: str, di_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
+def validate_εij_str(poscar: str, εij_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):
   st = Structure.from_str(poscar, fmt=fmt, primitive=primitive)
-  di = np.fromstring(di_str, dtype=float, sep=" ").reshape(3, 3)
+  εij = np.fromstring(εij_str, dtype=float, sep=" ").reshape(3, 3)
 
   a = SpacegroupAnalyzer(st, symprec=1e-2, angle_tolerance=5.0)
 
-  return validate_di(a, di)
+  return validate_εij(a, εij)
 
 
 def validate_cij_str(poscar: str, cij_str: str, fmt: Literal["cif", "poscar", "cssr", "json", "yaml", "xsf", "mcsqs", "res"] = "poscar", primitive: bool = True):

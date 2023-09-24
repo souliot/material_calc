@@ -7,7 +7,7 @@ import { BasicApiResponse } from '@/types/basic';
 const BASIC_PATH = '/api/v1/vasp/validate';
 
 export async function all(data: any) {
-  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}`, {
+  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/all`, {
     method: 'POST',
     data,
   });
@@ -22,8 +22,8 @@ export async function cij(data: any) {
   return res as BasicApiResponse<any>;
 }
 
-export async function diele(data: any) {
-  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/diele`, {
+export async function εij(data: any) {
+  const res = await request<BasicApiResponse<any>>(`${BASIC_PATH}/εij`, {
     method: 'POST',
     data,
   });

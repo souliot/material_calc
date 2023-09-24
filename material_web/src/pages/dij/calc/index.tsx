@@ -103,6 +103,18 @@ const Calc: React.FC = () => {
           rules={[{ required: true, message: '请选择POSCAR文件！' }]}
         />
         <ProFormUploadButton
+          name="outcar_ela"
+          label="OUTCAR_elastic"
+          title="请选择OUTCAR_elastic文件"
+          max={1}
+          fieldProps={{
+            beforeUpload: () => {
+              return false;
+            },
+          }}
+          rules={[{ required: true, message: '请选择OUTCAR_elastic文件!' }]}
+        />
+        <ProFormUploadButton
           name="outcar_de"
           label="OUTCAR_ele"
           title="请选择OUTCAR_ele文件"
@@ -125,18 +137,6 @@ const Calc: React.FC = () => {
             },
           }}
           rules={[{ required: true, message: '请选择OUTCAR_ion文件!' }]}
-        />
-        <ProFormUploadButton
-          name="outcar_ela"
-          label="OUTCAR_elastic"
-          title="请选择OUTCAR_elastic文件"
-          max={1}
-          fieldProps={{
-            beforeUpload: () => {
-              return false;
-            },
-          }}
-          rules={[{ required: true, message: '请选择OUTCAR_elastic文件!' }]}
         />
       </ProForm>
       <ProCard

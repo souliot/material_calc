@@ -15,7 +15,7 @@ from material_calc.modules.common.space import get_mat_pie, get_mat_cij
 # 获取 De Di 的压电矩阵以及Dij
 
 
-def get_dedi_item_result(outcar: str):
+def get_dedi_item_result(typ: str = "ele", outcar: str = ""):
   pwd = os.getcwd()
   res = DediItemResult()
   work_dir = mkdtemp(prefix="dedi-")
@@ -34,7 +34,11 @@ def get_dedi_item_result(outcar: str):
   de_die = np.array(de_oc.dielectric_tensor)
   res.εij = np.array2string(de_die).replace("[", "").replace("]", "")
 
-  de_piezo = np.array(de_oc.piezo_tensor)
+  if typ == "ion":
+    de_piezo = np.array(de_oc.piezo_ionic_tensor)
+  else:
+    de_piezo = np.array(de_oc.piezo_tensor)
+
   de_xy = de_piezo[:, 3:4]
   # 追加 XY 列到末尾
   de_piezo = np.append(de_piezo, de_xy, axis=1)
@@ -46,6 +50,8 @@ def get_dedi_item_result(outcar: str):
   rmtree(work_dir)
 
   logs.info("[{}]: get_dedi_item_result end".format(work_dir))
+  logs.info("[{}]: get_dedi_item_result end".format(res.eij))
+
   return res
 
 

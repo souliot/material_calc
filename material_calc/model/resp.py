@@ -19,6 +19,8 @@ class Code(Enum):
   VaspValidateCij = 101
   VaspValidateDi = 102
   VaspValidatePiezo = 103
+  VaspValidateEle = 104
+  VaspValidateIon = 105
 
   VaspCalcElaResult = 201
   VaspCalcElaTools = 202
@@ -59,6 +61,8 @@ class Message(Enum):
   VaspValidateCij = "Vasp Cij 验证错误"
   VaspValidateDi = "Vasp Ela 验证错误"
   VaspValidatePiezo = "Vasp Piezo 验证错误"
+  VaspValidateEle = "Vasp eij-ele 验证错误"
+  VaspValidateIon = "Vasp eij-ion 验证错误"
 
   VaspCalcElaResult = "Vaspkit 获取计算结果错误"
   VaspCalcElaTools = "ElaTools 计算错误"

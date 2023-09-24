@@ -3,7 +3,7 @@ import { useIntl, useModel } from '@umijs/max';
 import { Result } from 'antd';
 import React from 'react';
 
-import { diele } from '@/services/valid';
+import { εij } from '@/services/valid';
 
 const Valid: React.FC = () => {
   /**
@@ -17,10 +17,11 @@ const Valid: React.FC = () => {
 
   const OnValid = async (values: any) => {
     const data = new FormData();
-    data.append('outcar', values.outcar[0].originFileObj);
     data.append('poscar', values.poscar[0].originFileObj);
+    data.append('outcar_de', values.outcar_de[0].originFileObj);
+    data.append('outcar_di', values.outcar_di[0].originFileObj);
 
-    const res = await diele(data);
+    const res = await εij(data);
 
     if (res.code == 1) {
       setValidItemStatus('success');
@@ -28,7 +29,7 @@ const Valid: React.FC = () => {
       return;
     }
     setValidItemStatus('error');
-    setValidItemDetail(res.data);
+    setValidItemDetail(res.message + '---' + res.data);
   };
 
   return (
@@ -62,16 +63,28 @@ const Valid: React.FC = () => {
           rules={[{ required: true, message: '请选择POSCAR文件！' }]}
         />
         <ProFormUploadButton
-          name="outcar"
-          label="OUTCAR"
-          title="请选择OUTCAR文件"
+          name="outcar_de"
+          label="OUTCAR_ele"
+          title="请选择OUTCAR_ele文件"
           max={1}
           fieldProps={{
             beforeUpload: () => {
               return false;
             },
           }}
-          rules={[{ required: true, message: '请选择OUTCAR文件!' }]}
+          rules={[{ required: true, message: '请选择OUTCAR_ele文件!' }]}
+        />
+        <ProFormUploadButton
+          name="outcar_di"
+          label="OUTCAR_ion"
+          title="请选择OUTCAR_ion文件"
+          max={1}
+          fieldProps={{
+            beforeUpload: () => {
+              return false;
+            },
+          }}
+          rules={[{ required: true, message: '请选择OUTCAR_ion文件!' }]}
         />
       </ProForm>
       <ProCard title="验证结果" style={{ marginTop: 20 }} bordered headerBordered>

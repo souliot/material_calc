@@ -21,14 +21,14 @@ except Exception as e:
   logs.error("read ela.json file err: {}".format(e))
   exit()
 
-# 初始化 DI JSON
+# 初始化 εij JSON
 try:
-  with open(os.path.join(os.path.dirname(__file__), "vector/di.json"), 'r') as di:
-    content = di.read()
+  with open(os.path.join(os.path.dirname(__file__), "vector/εij.json"), 'r') as εij:
+    content = εij.read()
     DI_JSON = json.loads(content)
-  di.close()
+  εij.close()
 except Exception as e:
-  logs.error("read di.json file err: {}".format(e))
+  logs.error("read εij.json file err: {}".format(e))
   exit()
 
 # 初始化 PIEZO JSON
@@ -82,8 +82,8 @@ def get_mat_cij(a: SpacegroupAnalyzer):
   return get_mat_cij_by_pg(pg)
 
 
-# 获取 di 矩阵
-def get_mat_di_by_pg(pg: str):
+# 获取 εij 矩阵
+def get_mat_εij_by_pg(pg: str):
   key = ""
   if (pg in ['1', '-1']):
     key = 'Triclinic'
@@ -112,10 +112,10 @@ def get_mat_di_by_pg(pg: str):
   return key, np.array(DI_JSON[key])
 
 
-def get_mat_di(a: SpacegroupAnalyzer):
+def get_mat_εij(a: SpacegroupAnalyzer):
   # 获取点群
   pg = str(a.get_point_group_symbol())
-  return get_mat_di_by_pg(pg)
+  return get_mat_εij_by_pg(pg)
 
 
 # 获取 piezo 矩阵
