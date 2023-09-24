@@ -112,7 +112,7 @@ const Welcome: React.FC = () => {
             rootClassName={'welcome-result'}
             status={'success'}
             icon={<SmileOutlined />}
-            title="欢迎使用基于第一性原理介电常数的大通量计算分析软件!"
+            title="基于第一性原理压电应力常数的大通量计算分析软件!"
           />
         </div>
       </Card>

@@ -52,48 +52,48 @@ export default [
   //     },
   //   ],
   // },
-  {
-    path: '/diele',
-    name: 'diele',
-    icon: 'Thunderbolt',
-    routes: [
-      {
-        path: '/diele',
-        redirect: '/diele/valid',
-      },
-      {
-        name: 'valid',
-        path: '/diele/valid',
-        component: './diele/valid',
-      },
-      {
-        name: 'calc',
-        path: '/diele/calc',
-        component: './diele/calc',
-      },
-    ],
-  },
   // {
-  //   path: '/dedi',
-  //   name: 'dedi',
-  //   icon: 'UngroupOutlined',
+  //   path: '/diele',
+  //   name: 'diele',
+  //   icon: 'Thunderbolt',
   //   routes: [
   //     {
-  //       path: '/dedi',
-  //       redirect: '/dedi/valid',
+  //       path: '/diele',
+  //       redirect: '/diele/valid',
   //     },
   //     {
   //       name: 'valid',
-  //       path: '/dedi/valid',
-  //       component: './dedi/valid',
+  //       path: '/diele/valid',
+  //       component: './diele/valid',
   //     },
   //     {
   //       name: 'calc',
-  //       path: '/dedi/calc',
-  //       component: './dedi/calc',
+  //       path: '/diele/calc',
+  //       component: './diele/calc',
   //     },
   //   ],
   // },
+  {
+    path: '/dedi',
+    name: 'dedi',
+    icon: 'UngroupOutlined',
+    routes: [
+      {
+        path: '/dedi',
+        redirect: '/dedi/valid',
+      },
+      {
+        name: 'valid',
+        path: '/dedi/valid',
+        component: './dedi/valid',
+      },
+      {
+        name: 'calc',
+        path: '/dedi/calc',
+        component: './dedi/calc',
+      },
+    ],
+  },
   // {
   //   path: '/dij',
   //   name: 'dij',
