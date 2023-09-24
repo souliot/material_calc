@@ -21,58 +21,58 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
-  {
-    path: '/ela',
-    name: 'ela',
-    icon: 'Gold',
-    routes: [
-      {
-        path: '/ela',
-        redirect: '/ela/valid',
-      },
-      {
-        name: 'valid',
-        path: '/ela/valid',
-        component: './ela/valid',
-      },
-      {
-        name: 'stable',
-        path: '/ela/stable',
-        component: './ela/stable',
-      },
-      {
-        name: 'calc',
-        path: '/ela/calc',
-        component: './ela/calc',
-      },
-      {
-        name: 'vision',
-        path: '/ela/vision',
-        component: './ela/vision',
-      },
-    ],
-  },
   // {
-  //   path: '/diele',
-  //   name: 'diele',
-  //   icon: 'Thunderbolt',
+  //   path: '/ela',
+  //   name: 'ela',
+  //   icon: 'Gold',
   //   routes: [
   //     {
-  //       path: '/diele',
-  //       redirect: '/diele/valid',
+  //       path: '/ela',
+  //       redirect: '/ela/valid',
   //     },
   //     {
   //       name: 'valid',
-  //       path: '/diele/valid',
-  //       component: './diele/valid',
+  //       path: '/ela/valid',
+  //       component: './ela/valid',
+  //     },
+  //     {
+  //       name: 'stable',
+  //       path: '/ela/stable',
+  //       component: './ela/stable',
   //     },
   //     {
   //       name: 'calc',
-  //       path: '/diele/calc',
-  //       component: './diele/calc',
+  //       path: '/ela/calc',
+  //       component: './ela/calc',
+  //     },
+  //     {
+  //       name: 'vision',
+  //       path: '/ela/vision',
+  //       component: './ela/vision',
   //     },
   //   ],
   // },
+  {
+    path: '/diele',
+    name: 'diele',
+    icon: 'Thunderbolt',
+    routes: [
+      {
+        path: '/diele',
+        redirect: '/diele/valid',
+      },
+      {
+        name: 'valid',
+        path: '/diele/valid',
+        component: './diele/valid',
+      },
+      {
+        name: 'calc',
+        path: '/diele/calc',
+        component: './diele/calc',
+      },
+    ],
+  },
   // {
   //   path: '/dedi',
   //   name: 'dedi',
